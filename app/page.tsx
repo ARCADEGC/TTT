@@ -1,28 +1,47 @@
 "use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useEffect, useState } from "react";
+import { socket } from "@/lib/socket";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
-    const [state, setState] = useState<number | null>(null);
+    const [isConnected, setIsConnected] = useState(false);
+    const [transport, setTransport] = useState("N/A");
 
     useEffect(() => {
-        setState(Math.round(Math.random() * 100) / 100);
-    }, [setState]);
+        if (socket.connected) {
+            onConnect();
+        }
+
+        function onConnect() {
+            setIsConnected(true);
+            setTransport(socket.io.engine.transport.name);
+
+            socket.io.engine.on("upgrade", (transport) => {
+                setTransport(transport.name);
+            });
+        }
+
+        function onDisconnect() {
+            setIsConnected(false);
+            setTransport("N/A");
+        }
+
+        socket.on("connect", onConnect);
+        socket.on("disconnect", onDisconnect);
+
+        return () => {
+            socket.off("connect", onConnect);
+            socket.off("disconnect", onDisconnect);
+        };
+    }, []);
 
     return (
-        <main className="p-8">
-            <h1 className="text-7xl font-black">Card Game</h1>
+        <div>
+            <p>Status: {isConnected ? "connected" : "disconnected"}</p>
+            <p>Transport: {transport}</p>
 
-            <Card className="grid w-64 [aspect-ratio:2.5_/_3.5]">
-                <CardContent className="my-auto text-center">
-                    <span className="text-6xl">{state}</span>
-                </CardContent>
-                <CardHeader className="mb-12 mt-auto text-center">
-                    <CardTitle className="text-3xl font-bold">Role</CardTitle>
-                    <CardDescription className="tracking-wide">Role description</CardDescription>
-                </CardHeader>
-            </Card>
-        </main>
+            <Button onClick={() => socket.emit("hello", "world")}>click</Button>
+        </div>
     );
 }
