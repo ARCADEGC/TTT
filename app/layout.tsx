@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { CSPostHogProvider } from "@/app/_analytics/posthogProvider";
+import { CSPostHogProvider } from "@/app/analytics/posthogProvider";
 
 const geistSans = localFont({
     src: "./fonts/GeistVF.woff",
