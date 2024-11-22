@@ -22,6 +22,8 @@
         "lucide-react": "^0.460.0",
         "motion": "^11.11.17",
         "next": "15.0.2",
+        "posthog-js": "^1.187.2",
+        "posthog-node": "^4.2.3",
         "react": "19.0.0-rc-02c0e824-20241028",
         "react-dom": "19.0.0-rc-02c0e824-20241028",
         "socket.io": "^4.8.1",

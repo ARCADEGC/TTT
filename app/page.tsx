@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { socket } from "@/lib/socket";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Home() {
     const [isConnected, setIsConnected] = useState(false);
@@ -41,7 +42,12 @@ export default function Home() {
             <p>Status: {isConnected ? "connected" : "disconnected"}</p>
             <p>Transport: {transport}</p>
 
-            <Button onClick={() => socket.emit("hello", "world")}>click</Button>
+            <Button
+                onClick={() => socket.emit("hello", "world")}
+                asChild
+            >
+                <Link href="/test">click</Link>
+            </Button>
         </div>
     );
 }

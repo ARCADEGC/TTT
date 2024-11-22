@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { CSPostHogProvider } from "@/app/_analytics/posthogProvider";
 
 const geistSans = localFont({
     src: "./fonts/GeistVF.woff",
@@ -19,8 +20,10 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
-            <body className={`${geistSans.variable} bg-background text-foreground antialiased`}>{children}</body>
-        </html>
+        <CSPostHogProvider>
+            <html lang="en">
+                <body className={`${geistSans.variable} bg-background text-foreground antialiased`}>{children}</body>
+            </html>
+        </CSPostHogProvider>
     );
 }
