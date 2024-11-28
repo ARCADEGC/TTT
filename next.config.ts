@@ -1,5 +1,6 @@
 // import MillionLint from "@million/lint";
 import type { NextConfig } from "next";
+import { withAxiom } from "next-axiom";
 
 const nextConfig: NextConfig = {
     experimental: {
@@ -12,4 +13,6 @@ const nextConfig: NextConfig = {
 //     rsc: true,
 // })(nextConfig);
 
-export default nextConfig;
+const withAxiomConfig = withAxiom(nextConfig);
+
+export default withAxiomConfig;
