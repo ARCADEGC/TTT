@@ -12,6 +12,7 @@
     "dependencies": {
         "@million/lint": "^1.0.12",
         "@radix-ui/react-slot": "^1.1.0",
+        "@radix-ui/react-tooltip": "^1.1.4",
         "@react-three/drei": "^9.117.0",
         "@react-three/fiber": "^8.17.10",
         "@react-three/postprocessing": "^2.16.3",
