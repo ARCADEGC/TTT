@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { CSPostHogProvider } from "@/app/analytics/posthogProvider";
+import { AxiomWebVitals } from "next-axiom";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const geistSans = localFont({
     src: "./fonts/GeistVF.woff",
@@ -22,8 +24,20 @@ export default function RootLayout({
     return (
         <CSPostHogProvider>
             <html lang="en">
-                <body className={`${geistSans.variable} bg-background text-foreground antialiased`}>{children}</body>
+                <body className={`${geistSans.variable} bg-background text-foreground antialiased`}>
+                    <Injectors />
+                    {children}
+                </body>
             </html>
         </CSPostHogProvider>
+    );
+}
+
+function Injectors() {
+    return (
+        <>
+            <AxiomWebVitals />
+            <SpeedInsights />
+        </>
     );
 }
