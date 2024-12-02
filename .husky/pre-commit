@@ -1,0 +1,2 @@
+bunx prettier . --write
+bun lint
