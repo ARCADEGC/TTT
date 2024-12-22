@@ -4,21 +4,13 @@ import { useEffect, useState } from "react";
 import { socket } from "@/lib/socket";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Howl } from "howler";
+
+import { HowlButton } from "@/components/HowlButton";
+import { RoomJoinForm } from "@/components/RoomJoinForm";
 
 export default function Home() {
     const [isConnected, setIsConnected] = useState(false);
-    const [transport, setTransport] = useState("N/A");
-
-    const buttonOnClickAudio = new Howl({
-        src: ["/audio/audioOnClickTest.wav"],
-        html5: true,
-    });
-
-    const buttonOnHoverAudio = new Howl({
-        src: ["/audio/audioOnHoverTest.wav"],
-        html5: true,
-    });
+    const [messages, setMessages] = useState<string[]>([]);
 
     useEffect(() => {
         if (socket.connected) {
@@ -27,20 +19,18 @@ export default function Home() {
 
         function onConnect() {
             setIsConnected(true);
-            setTransport(socket.io.engine.transport.name);
-
-            socket.io.engine.on("upgrade", (transport) => {
-                setTransport(transport.name);
-            });
         }
 
         function onDisconnect() {
             setIsConnected(false);
-            setTransport("N/A");
         }
 
         socket.on("connect", onConnect);
         socket.on("disconnect", onDisconnect);
+
+        socket.on("message", (message: string) => {
+            setMessages((prev) => [...prev, message]);
+        });
 
         return () => {
             socket.off("connect", onConnect);
@@ -55,7 +45,6 @@ export default function Home() {
     return (
         <div>
             <p>Status: {isConnected ? "connected" : "disconnected"}</p>
-            <p>Transport: {transport}</p>
 
             <Button
                 onClick={handleOnClick}
@@ -64,13 +53,17 @@ export default function Home() {
                 <Link href="/test">click</Link>
             </Button>
 
-            <Button
-                onClick={() => buttonOnClickAudio.play()}
-                onMouseEnter={() => buttonOnHoverAudio.play()}
-                variant={"outline"}
-            >
-                Play
-            </Button>
+            <HowlButton />
+
+            <RoomJoinForm />
+
+            <div>
+                <ul>
+                    {messages.map((message, index) => (
+                        <li key={index}>{message}</li>
+                    ))}
+                </ul>
+            </div>
         </div>
     );
 }
