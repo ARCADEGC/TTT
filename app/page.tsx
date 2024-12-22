@@ -4,10 +4,21 @@ import { useEffect, useState } from "react";
 import { socket } from "@/lib/socket";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Howl } from "howler";
 
 export default function Home() {
     const [isConnected, setIsConnected] = useState(false);
     const [transport, setTransport] = useState("N/A");
+
+    const buttonOnClickAudio = new Howl({
+        src: ["/audio/audioOnClickTest.wav"],
+        html5: true,
+    });
+
+    const buttonOnHoverAudio = new Howl({
+        src: ["/audio/audioOnHoverTest.wav"],
+        html5: true,
+    });
 
     useEffect(() => {
         if (socket.connected) {
@@ -51,6 +62,14 @@ export default function Home() {
                 asChild
             >
                 <Link href="/test">click</Link>
+            </Button>
+
+            <Button
+                onClick={() => buttonOnClickAudio.play()}
+                onMouseEnter={() => buttonOnHoverAudio.play()}
+                variant={"outline"}
+            >
+                Play
             </Button>
         </div>
     );
