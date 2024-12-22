@@ -4,6 +4,7 @@ import "./globals.css";
 import { CSPostHogProvider } from "@/app/analytics/posthogProvider";
 import { AxiomWebVitals } from "next-axiom";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = localFont({
     src: "./fonts/GeistVF.woff",
@@ -38,6 +39,7 @@ function Injectors() {
         <>
             <AxiomWebVitals />
             <SpeedInsights />
+            <Toaster />
         </>
     );
 }

@@ -1,6 +1,6 @@
-// import { Elysia } from "elysia";
 import { Server } from "socket.io";
 import { createServer } from "node:http";
+import { onDisconnect, onHello } from "@/server/functions";
 
 const server = createServer();
 const io = new Server(server, {
@@ -11,14 +11,24 @@ const io = new Server(server, {
 });
 
 io.on("connection", (socket) => {
-    console.log("a user connected");
+    socket.on("disconnect", onDisconnect);
+    socket.on("hello", onHello);
 
-    socket.on("disconnect", () => {
-        console.log("user disconnected");
-    });
+    socket.on("join-room", async (roomName: string, callback) => {
+        socket.rooms.forEach((room) => {
+            socket.leave(room);
+        });
 
-    socket.on("hello", (text) => {
-        console.log(text);
+        const sockets = await io.in(roomName).fetchSockets();
+        const users = sockets.map((socket) => socket.id);
+
+        socket.join(roomName);
+
+        socket.broadcast
+            .to(roomName)
+            .emit("message", `${socket.id} joined room  ${roomName} together with ${users.join(", ")}`);
+
+        callback(roomName);
     });
 });
 
