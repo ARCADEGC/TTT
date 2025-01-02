@@ -1,69 +1,20 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { socket } from "@/lib/socket";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-
-import { HowlButton } from "@/components/HowlButton";
-import { RoomJoinForm } from "@/components/RoomJoinForm";
+import { HowlButton } from "@/app/_components/HowlButton";
+import { RoomJoinForm } from "@/app/_components/RoomJoinForm";
+import { TestButton } from "@/app/_components/TestButton";
+import { IsConnected } from "@/app/_components/IsConnected";
+import { MessagesList } from "@/app/_components/MessagesList";
 
 export default function Home() {
-    const [isConnected, setIsConnected] = useState(false);
-    const [messages, setMessages] = useState<string[]>([]);
-
-    useEffect(() => {
-        if (socket.connected) {
-            onConnect();
-        }
-
-        function onConnect() {
-            setIsConnected(true);
-        }
-
-        function onDisconnect() {
-            setIsConnected(false);
-        }
-
-        socket.on("connect", onConnect);
-        socket.on("disconnect", onDisconnect);
-
-        socket.on("message", (message: string) => {
-            setMessages((prev) => [...prev, message]);
-        });
-
-        return () => {
-            socket.off("connect", onConnect);
-            socket.off("disconnect", onDisconnect);
-        };
-    }, []);
-
-    function handleOnClick() {
-        socket.emit("hello", "world");
-    }
-
     return (
-        <div>
-            <p>Status: {isConnected ? "connected" : "disconnected"}</p>
-
-            <Button
-                onClick={handleOnClick}
-                asChild
-            >
-                <Link href="/test">click</Link>
-            </Button>
+        <div className="mx-auto my-12 grid max-w-prose gap-8">
+            <TestButton />
 
             <HowlButton />
 
-            <RoomJoinForm />
+            <IsConnected />
+            <MessagesList />
 
-            <div>
-                <ul>
-                    {messages.map((message, index) => (
-                        <li key={index}>{message}</li>
-                    ))}
-                </ul>
-            </div>
+            <RoomJoinForm />
         </div>
     );
 }

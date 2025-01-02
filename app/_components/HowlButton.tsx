@@ -1,3 +1,5 @@
+"use client";
+
 import { Howl } from "howler";
 
 import { Button } from "@/components/ui/button";

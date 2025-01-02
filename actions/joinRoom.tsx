@@ -1,6 +1,7 @@
 "use server";
 
 import arcjet, { request, shield, tokenBucket } from "@arcjet/next";
+import { Logger } from "next-axiom";
 
 const aj = arcjet({
     key: process.env.ARCJET_KEY!,
@@ -19,11 +20,12 @@ const aj = arcjet({
 });
 
 export async function useArcjetJoinRoom() {
+    const log = new Logger({ source: "useArcjetJoinRoom" });
     const req = await request();
     const decision = await aj.protect(req, { requested: 1 });
 
     if (decision.isErrored()) {
-        console.warn(decision.reason.message); // TODO: Add Axiom
+        log.error(decision.reason.message);
     }
 
     return decision.isAllowed();

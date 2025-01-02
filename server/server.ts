@@ -14,7 +14,7 @@ io.on("connection", (socket) => {
     socket.on("disconnect", onDisconnect);
     socket.on("hello", onHello);
 
-    socket.on("join-room", async (roomName: string, callback) => {
+    socket.on("join-room", async (roomName: string, callback: (response: string) => void) => {
         socket.rooms.forEach((room) => {
             socket.leave(room);
         });
@@ -27,6 +27,8 @@ io.on("connection", (socket) => {
         socket.broadcast
             .to(roomName)
             .emit("message", `${socket.id} joined room  ${roomName} together with ${users.join(", ")}`);
+
+        console.log(`User ${socket.id} joined room ${roomName}`);
 
         callback(roomName);
     });
