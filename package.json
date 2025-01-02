@@ -7,11 +7,12 @@
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
-        "server": "bun server/server.ts",
+        "server": "bun --watch server/server.ts",
         "prepare": "husky"
     },
     "dependencies": {
         "@arcjet/next": "^1.0.0-alpha.34",
+        "@arcjet/node": "^1.0.0-alpha.34",
         "@million/lint": "^1.0.14",
         "@radix-ui/react-slot": "^1.1.1",
         "@radix-ui/react-tooltip": "^1.1.6",

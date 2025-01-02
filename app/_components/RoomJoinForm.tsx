@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { socket } from "@/lib/socket";
 import { toast } from "sonner";
-import { useArcjetJoinRoom } from "@/actions/joinRoom";
+import { TJoinRoomCallback } from "@/types/room";
 
 export function RoomJoinForm() {
     async function joinRoomOnSubmit(data: any) {
@@ -13,17 +13,15 @@ export function RoomJoinForm() {
             return;
         }
 
-        const isAllowed = await useArcjetJoinRoom();
+        socket.emit("join-room", data.roomName, (callback: TJoinRoomCallback) => {
+            if (!callback.success) {
+                toast.error(callback.errorMessage);
+                return;
+            }
 
-        if (!isAllowed) {
-            toast.error("You can't join");
-            return;
-        }
-
-        socket.emit("join-room", data.roomName, (roomName: string) => {
             toast(
                 <p className="text-muted-foreground">
-                    You joined room <code className="text-white">{roomName}</code>
+                    You joined room <code className="text-white">{callback.roomName}</code>
                 </p>,
             );
         });
