@@ -1,35 +1,34 @@
+"use client";
+
 import { Input } from "@/components/ui/input";
-import Form from "next/form";
 import { Button } from "@/components/ui/button";
 import { socket } from "@/lib/socket";
 import { toast } from "sonner";
-import { useArcjetJoinRoom } from "@/actions/joinRoom";
+import { TJoinRoomCallback } from "@/types/room";
 
 export function RoomJoinForm() {
     async function joinRoomOnSubmit(data: any) {
-        const isAllowed = await useArcjetJoinRoom();
-
-        if (!isAllowed) {
-            toast.error("You are not allowed to join");
-            return;
-        }
-
         if (!socket.connected) {
             toast.error("You are not connected");
             return;
         }
 
-        socket.emit("join-room", data.roomName, (res: string) =>
+        socket.emit("join-room", data.roomName, (callback: TJoinRoomCallback) => {
+            if (!callback.success) {
+                toast.error(callback.errorMessage);
+                return;
+            }
+
             toast(
                 <p className="text-muted-foreground">
-                    You joined room <code className="text-white">{res}</code>
+                    You joined room <code className="text-white">{callback.roomName}</code>
                 </p>,
-            ),
-        );
+            );
+        });
     }
 
     return (
-        <Form
+        <form
             action={joinRoomOnSubmit}
             className="flex max-w-prose gap-4"
         >
@@ -39,6 +38,6 @@ export function RoomJoinForm() {
                 placeholder="Room Name"
             />
             <Button type="submit">Join Room</Button>
-        </Form>
+        </form>
     );
 }
