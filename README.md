@@ -1,36 +1,98 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Roadmap
 
-## Getting Started
+## Stack
 
-First, run the development server:
+- [x] NextJS 15
+- [ ] pmndrs 3D stack
+- [x] Tailwind 4, shadcn/ui as UI
+- [x] React 19 & Compiler
+- [x] DX Tools (Prettier, ESLint, ...)
+- [x] Howler as Audio Provider
+- [x] Posthog, Axiom, Vercel as Analytics
+- [x] Sentry, ArcJet as Application Health
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- ### WebSocket & Game State
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+    - [x] socket.io
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+    - [ ] Evaluate State Managment
+        - [ ] Jotai as Global State
+        - [ ] Zustand as State Machine
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- ### DB
 
-## Learn More
+    - [ ] UpStash as Redis
 
-To learn more about Next.js, take a look at the following resources:
+    - [ ] Evaluate DB Provider
+        - Turso as LibSQL
+        - Neon as Postgres
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Game
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- ### Game Lobby
 
-## Deploy on Vercel
+    - [x] Player Join
+    - [ ] Player leave
+    - [ ] Show players joined
+    - [ ] Room Leader
+    - [ ] Player management
+    - [ ] Ready state
+    - [ ] Play action
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- ### Game Loop
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+    - [ ] IN - OUT Phase
+    - [ ] Voting
+    - [ ] History
+
+- ### Game Logic
+
+    - [ ] Decision
+    - [ ] Win conditions
+    - [ ] Game Management
+
+- ### Gameplay Overhaul
+    - [ ] Game Test
+    - [ ] Feedback
+    - [ ] Working state
+
+## UI
+
+- [ ] UI
+    > UI list contained in internal files.
+
+## Audio
+
+- [ ] Audio
+    > Audio list contained in internal files.
+
+## 3D
+
+- [ ] Lobby
+- [ ] Game Scene
+- [ ] Scene Ambient
+
+## Porting
+
+- [ ] Steam
+
+## I18N
+
+- ### Multilingual
+    - [ ] Evaluate Interlingual Provider/Tool
+        - [ ] [next-intl](https://github.com/amannn/next-intl)
+        - [ ] [Crowdin](https://crowdin.com/)
+- ### Multi-Regional
+    - [ ] ...
+
+## A11Y
+
+- [ ] ...
+
+## Deploying
+
+- [ ] Vercel for Front-End
+
+- [x] Evaluate WebSocket service
+    - ~~Railway~~
+    - [ ] Fly.io
