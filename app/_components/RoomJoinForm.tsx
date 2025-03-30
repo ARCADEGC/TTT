@@ -30,7 +30,7 @@ export function RoomJoinForm() {
     return (
         <form
             action={joinRoomOnSubmit}
-            className="flex max-w-prose gap-4"
+            className="ml-auto flex max-w-prose gap-4"
         >
             <Input
                 type="text"
