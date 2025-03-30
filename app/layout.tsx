@@ -25,7 +25,7 @@ export default function RootLayout({
     return (
         <CSPostHogProvider>
             <html lang="en">
-                <body className={`${geistSans.variable} bg-background text-foreground antialiased`}>
+                <body className={`${geistSans.variable} bg-background text-foreground min-h-svh antialiased`}>
                     <Injectors />
                     {children}
                 </body>

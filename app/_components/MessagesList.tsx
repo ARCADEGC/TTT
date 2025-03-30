@@ -17,7 +17,7 @@ export function MessagesList() {
     }, []);
 
     return (
-        <ul className="min-h-12 rounded-lg border p-4 shadow">
+        <ul className="min-h-12 w-full rounded-lg border p-4 shadow">
             {messages.map((message, index) => (
                 <li key={index}>{message}</li>
             ))}
